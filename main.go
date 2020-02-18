@@ -27,7 +27,7 @@ func dbConn() (db *sql.DB) {
 
 var tmpl = template.Must(template.ParseGlob("template/*"))
 
-func Index(w http.ResponseWriter, r *http.Request) {
+func Index(w http.ResponseWriter, _ *http.Request) {
 	db := dbConn()
 	selDB, err := db.Query("SELECT * FROM Contact ORDER BY id DESC")
 	if err != nil {
@@ -47,7 +47,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		emp.Email = email
 		res = append(res, emp)
 	}
-	tmpl.ExecuteTemplate(w, "Index", res)
+	tmpl.ExecuteTemplate(w, "index", res)
 	defer db.Close()
 }
 
@@ -70,12 +70,12 @@ func Show(w http.ResponseWriter, r *http.Request) {
 		emp.Name = name
 		emp.Email = email
 	}
-	tmpl.ExecuteTemplate(w, "Show", emp)
+	tmpl.ExecuteTemplate(w, "show", emp)
 	defer db.Close()
 }
 
-func New(w http.ResponseWriter, r *http.Request) {
-	tmpl.ExecuteTemplate(w, "New", nil)
+func New(w http.ResponseWriter, _ *http.Request) {
+	tmpl.ExecuteTemplate(w, "new", nil)
 }
 
 func Edit(w http.ResponseWriter, r *http.Request) {
@@ -97,7 +97,7 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 		emp.Name = name
 		emp.Email = email
 	}
-	tmpl.ExecuteTemplate(w, "Edit", emp)
+	tmpl.ExecuteTemplate(w, "edit", emp)
 	defer db.Close()
 }
 
